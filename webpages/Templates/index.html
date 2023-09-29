@@ -1,0 +1,38 @@
+{% extends 'main.html' %}
+
+<html>
+    {% block title %}
+    home
+    {% endblock %}
+
+    {% block content %}
+    <div class="content">
+        <div class="topsection">
+            <a href="/read/{{lastitem.id}}">
+                <img src="{{ lastitem.image1.url }}"  alt="img">
+                <p style="padding: 2px;">{{ lastitem.quickintro }}</p>
+            </a>
+        </div>
+        <div class="bottomsection">
+            <div class="leftsection">
+                <h3 style="color: #7b1fa2; margin-left: 10px;">Latest</h3>
+                <ul>
+                    {% for x in myarticles %}
+                    <div class="inn">
+                        <a href="/read/{{x.id}}">
+                            <li>{{x.title1}}</li>
+                            <li><img src="{{ x.image1.url }}" alt="img"></li>
+                        </a>
+                    </div>
+                    
+                    {% endfor %}
+                </ul>
+                
+            </div>
+            <div class="rightsection">
+
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</html>

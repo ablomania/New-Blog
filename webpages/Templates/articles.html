@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+
+{% block title %}
+Articles
+{% endblock %}
+
+{% block content %}
+<div class="articlelist">
+    {% for x in myarticles %}
+    <div class="articles">
+        <a href="/read/{{x.id}}">
+            <img src="{{ x.image1.url}}">
+            <div class="spec">
+                <p>{{ x.name }}</p>
+                <p>{{ x.date_posted }}</p>
+                <p>{{ x.quickintro }}</p>
+            </div>
+        </a>
+        
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
