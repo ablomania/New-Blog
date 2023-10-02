@@ -1,0 +1,52 @@
+{% extends 'main.html' %}
+
+{% block title %}
+{{open.name}}
+{% endblock %}
+
+{% block content %}
+<div class="articlesection">
+    <div class="articleleft">
+        <h3>{{ open.title1 }}</h3>
+        <p>{{ open.intro }}</p>
+        <img src="{{open.image1.url}}" alt="img">
+        <p>{{ open.body1 }}</p>
+        <p>{{ open.title2 }}</p>
+        <img src="{{ open.image2.url }}" alt = "img">
+        <p>{{ open.body2 }}</p>
+        <p>{{ open.conc }}</p>
+        <p><span class="right">{{ open.date_posted }}</span></p>
+        <div class="readnav">
+            <a href="/read/{{readerb}}"><button type="button" name="backbutton">Back</button></a>
+            <a href="/read/{{readerf}}"><button type="button" name="nextbutton">Next</button></a>
+        </div>
+    </div>
+    <div class="articlebottom">
+        <form method="POST" action="">
+            {% csrf_token %}
+            <h3>Comment</h3>
+            <input type="text" name="name" placeholder="name" required autofocus>
+            <textarea name="comment" placeholder="comment" required></textarea>
+            <input type="submit" value="Post">
+        </form>
+        <h3>Related Comments</h3>
+        {% if mycomments %}
+            {% for x in mycomments %}
+            <div class="articlecomment">
+                <p style="padding-left: 20px;">{{x.name}}</p>
+                <p style="padding-left: 20px;">{{x.comnt}}</p>
+                <p>{{x.date_posted}}</p>
+            </div>
+            {% endfor %}
+        {% else %}
+        <div class="articlecomment">
+            <p style="align-self: flex-start;">No Comments</p>
+        </div>
+        {% endif %}
+    </div>
+    <div class="articleright">
+        
+    </div>
+</div>
+{% endblock %}
+
