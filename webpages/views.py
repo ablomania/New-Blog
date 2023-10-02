@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.template import loader
 
 # Create your views here.
+#Index page
 def index(request):
     template = loader.get_template('index.html')
     myarticles = Articles.objects.all().order_by('-date_posted')[:5]
@@ -13,12 +14,13 @@ def index(request):
     }
     return HttpResponse(template.render(context, request))
 
-
+#for reading page
 def read(request,id):
     template = loader.get_template('read.html')
     lastarticle = Articles.objects.filter().last()
     openarticle = Articles.objects.get(id=id)
     otherarticles = Articles.objects.all().order_by('date_posted')
+    mycomments = Usercomments.objects.filter(relatedarticle_id=openarticle.id).values()[:15]
     if openarticle.id == lastarticle.id:
         readerf = 1
     else:
@@ -28,11 +30,17 @@ def read(request,id):
     else:
         readerb = openarticle.id - 1
     context = {
-        'open' : openarticle, 'otherarticles' : otherarticles, 'readerf': readerf, 'readerb': readerb,
+        'open' : openarticle, 'otherarticles' : otherarticles, 'readerf': readerf, 'readerb': readerb, 'mycomments': mycomments,
     }
-    openarticle = readerf
+    if request.method == 'POST':
+        name = request.POST['name']
+        comment = request.POST['comment']
+        new_comment = Usercomments(name=name, comnt=comment, relatedarticle_id = openarticle.id)
+        new_comment.save()
+    openarticle.id = readerf
     return HttpResponse(template.render(context, request))
 
+#for articles page
 def articles(request):
     template = loader.get_template('articles.html')
     myarticles = Articles.objects.all()
@@ -41,6 +49,7 @@ def articles(request):
     }
     return HttpResponse(template.render(context, request))
 
+#for contact page
 def contact(request):
     template = loader.get_template('contact.html')
     context = {
@@ -48,10 +57,3 @@ def contact(request):
     }
     return HttpResponse(template.render(context, request))
 
-def comment(request,name):
-    template = loader.get_template('comments.html')
-    mycomments = Usercomments.objects.get(comments = name)
-    context = {
-        'mycomments' : mycomments,
-    }
-    return HttpResponse(template.render(context, request))

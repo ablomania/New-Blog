@@ -1,3 +1,14 @@
 
-    <p>name</p>
-    <p>comnt</p>
+<html>
+    
+
+    {% block comments %}
+        {%for x in mycomments%}
+            <p>x.name</p>
+            <p>x.comnt</p>
+        {% endfor %}
+    {% endblock %}
+    
+
+</html>
+    
