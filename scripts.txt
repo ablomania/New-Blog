@@ -1,0 +1,5 @@
+django dump database
+py -Xutf8 manage.py dumpdata webpages --exclude=contenttypes --exclude=auth.Permission -o data.json
+
+django load database
+py manage.py loaddata data.json
